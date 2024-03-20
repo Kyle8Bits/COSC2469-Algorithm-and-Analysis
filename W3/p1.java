@@ -24,12 +24,11 @@ public class p1 {
         node6.next = node7;
         node7.next = node8;
         node8.next = node9;
-        node9.next = node2;
 
         int count = 1;
 
         System.out.println("Before removing loop: ");
-        while(head != null && count < 18){
+        while(head != null && count < 13){
             System.out.println(head.data.toString());
             head = head.next;
             count++;

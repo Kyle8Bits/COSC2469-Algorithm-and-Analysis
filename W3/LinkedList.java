@@ -1,7 +1,5 @@
 package W3;
 
-import W3.LinkedListQueue.Node;
-
 public class LinkedList<T> implements List<T> {
   static class Node<T> {
     T data;
