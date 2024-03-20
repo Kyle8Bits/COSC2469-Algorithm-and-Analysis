@@ -195,17 +195,45 @@ public class LinkedList<T> implements List<T> {
     return false;
   }
 
-public boolean removeLoop(){
-  Node slow, fast;
+public boolean hasLoop(Node<T> head){
+  Node<T> slow, fast;
   slow = fast = head;
 
-  while (true){
-    if(fast.next == null || fast.next.next == null)
-      return false;
+  while(slow != null && fast.next != null){
+    slow = slow.next;
+    fast = fast.next.next;
+    
+    if(slow == fast){
+      int count = 1;
+      fast = fast.next;
+
+      while (slow != fast){
+        fast = fast.next;
+        count++;
+        //count how many element in the loop
+      }
+
+      slow = fast = head;
+      Node<T> prev = null;
+
+      while(count > 0){
+        prev = fast;
+        fast = fast.next;
+        count--;
+        //advance fast and slow with the same speed
+      }
+      while (slow!= fast){
+        prev = fast;
+        fast = fast.next;
+        slow = slow.next;
+      }
+
+      prev.next = null;
+
+      return true;
+    }
   }
-
-
-
+  return false;
 }
 
   public static void main(String[] args) {
