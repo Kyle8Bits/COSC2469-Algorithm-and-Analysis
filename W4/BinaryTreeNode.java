@@ -1,4 +1,4 @@
-
+package W4;
 
 public class BinaryTreeNode<T extends Comparable<T>> {
   T data = null;

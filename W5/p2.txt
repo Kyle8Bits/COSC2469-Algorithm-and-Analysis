@@ -27,106 +27,18 @@ public class RMITStudent {
 
 
 
-
-package w05;
-
-
-public class P2A {
-  public static void main(String[] args) {
-    RMITStudentCollectionChaining collection = new RMITStudentCollectionChaining(13);
+class RMITStudentNode {
+  RMITStudent data;
+  RMITStudentNode next;
 
 
-    // all student records have the same hash value
-    // and will be in the same list
-    collection.put(new RMITStudent("S123", "Alice", "IT", 3.6));
-    collection.put(new RMITStudent("S321", "Bob", "SE", 4.0));
-    collection.put(new RMITStudent("S231", "Carol", "CS", 3.8));
-    System.out.println(collection.get("S123"));  // Alice
-    System.out.println(collection.get("S231"));  // Carol
-    System.out.println(collection.get("S213"));  // null
-
-
-    // Verify if 12 out of 13 slots in the hash table are null
-    int nullCount = 0;
-    for (int i = 0; i < 13; i++) {
-      if (collection.hashTable[i] == null) {
-        nullCount++;
-      }
-    }
-    System.out.println("Null count: " + nullCount);  // must be 12
-
-
-    // add another student, this time let's try a different hash
-    collection.put(new RMITStudent("S124", "Dang", "IS", 3.5));
-
-
-    // Verify if 11 out of 13 slots in the hash table are null
-    nullCount = 0;
-    for (int i = 0; i < 13; i++) {
-      if (collection.hashTable[i] == null) {
-        nullCount++;
-      }
-    }
-    System.out.println("Null count: " + nullCount);  // must be 11 now
-
-
-    // let's remove one of the student and try to get that student again
-    collection.remove("S123");
-    // let access that student again, must be null now
-    System.out.println(collection.get("S123"));  // null
+  public RMITStudentNode(RMITStudent s) {
+    data = s;
+    next = null;
   }
 }
 
 
-class RMITStudentCollectionChaining {
-  int N;  // size of the array for the hash table
-  RMITStudentList[] hashTable;
-
-
-  public RMITStudentCollectionChaining(int tableSize) {
-    N = tableSize;
-    hashTable = new RMITStudentList[N];
-  }
-
-
-  int hashCharacter(char c) {
-    String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";    
-    return str.indexOf(c);
-  }
-
-
-  int hashString(String s) {
-    int res = 0;
-    for (int i = 0; i < s.length(); i++) {
-      res += hashCharacter(s.charAt(i));
-    }
-    return res % N;
-  }
-
-
-  boolean put(RMITStudent s) {
-	int hash = hashString(s.studentId);
-    	return hashTable[hash].insert(s);
-  }
-
-
-  RMITStudent get(String studentId) {
-	int index = hashString(studentId)
-   if hashTable[ind] == null => return null
-   Return hashTable[ind].get(studentId);
-   
-  }
-
-
-  boolean remove(String studentId) {
-  }
-
-
-}
-
-
-// Note: the LinkedList class developed in week 3
-// can be used instead of constructing a new class
 class RMITStudentList {
   RMITStudentNode head;
   int size;
@@ -203,16 +115,107 @@ class RMITStudentList {
 }
 
 
-class RMITStudentNode {
-  RMITStudent data;
-  RMITStudentNode next;
+package w05;
 
 
-  public RMITStudentNode(RMITStudent s) {
-    data = s;
-    next = null;
+public class P2A {
+  public static void main(String[] args) {
+    RMITStudentCollectionChaining collection = new RMITStudentCollectionChaining(13);
+
+
+    // all student records have the same hash value
+    // and will be in the same list
+    collection.put(new RMITStudent("S123", "Alice", "IT", 3.6));
+    collection.put(new RMITStudent("S321", "Bob", "SE", 4.0));
+    collection.put(new RMITStudent("S231", "Carol", "CS", 3.8));
+    System.out.println(collection.get("S123"));  // Alice
+    System.out.println(collection.get("S231"));  // Carol
+    System.out.println(collection.get("S213"));  // null
+
+
+    // Verify if 12 out of 13 slots in the hash table are null
+    int nullCount = 0;
+    for (int i = 0; i < 13; i++) {
+      if (collection.hashTable[i] == null) {
+        nullCount++;
+      }
+    }
+    System.out.println("Null count: " + nullCount);  // must be 12
+
+
+    // add another student, this time let's try a different hash
+    collection.put(new RMITStudent("S124", "Dang", "IS", 3.5));
+
+
+    // Verify if 11 out of 13 slots in the hash table are null
+    nullCount = 0;
+    for (int i = 0; i < 13; i++) {
+      if (collection.hashTable[i] == null) {
+        nullCount++;
+      }
+    }
+    System.out.println("Null count: " + nullCount);  // must be 11 now
+
+
+    // let's remove one of the student and try to get that student again
+    collection.remove("S123");
+    // let access that student again, must be null now
+    System.out.println(collection.get("S123"));  // null
   }
 }
+
+
+class RMITStudentCollectionChaining {
+  int N;  // size of the array for the hash table
+  RMITStudentList[] hashTable;
+
+
+  public RMITStudentCollectionChaining(int tableSize) {
+    N = tableSize;
+    hashTable = new RMITStudentList[N]; 
+  }
+
+
+  int hashCharacter(char c) {
+    String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";    
+    return str.indexOf(c);
+  }
+
+
+  int hashString(String s) {
+    int res = 0;
+    for (int i = 0; i < s.length(); i++) {
+      res += hashCharacter(s.charAt(i));
+    }
+    return res % N;
+  }
+
+
+  boolean put(RMITStudent s) {
+	int hash = hashString(s.studentId);
+    	return hashTable[hash].insert(s);
+  }
+
+
+  RMITStudent get(String studentId) {
+	int index = hashString(studentId)
+   if hashTable[ind] == null => return null
+   Return hashTable[ind].get(studentId);
+   
+  }
+
+
+  boolean remove(String studentId) {
+  }
+
+
+}
+
+
+// Note: the LinkedList class developed in week 3
+// can be used instead of constructing a new class
+
+
 
 
 
@@ -253,7 +256,7 @@ class RMITStudentCollectionLinearProbing {
       return false;
     }
     int hash = hashString(s.id);
-	While (hashTable[hash] != null) hash = ((hash + 1) % N
+	While (hashTable[hash] != null) hash = (hash + 1) % N
      hashTable[hash] = s
 }
     
