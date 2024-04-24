@@ -34,6 +34,7 @@ public class p2SeparateChaining {
         System.out.println("After remove s3974876");
 
         collection.remove("s4011796");
+        collection.remove("s1234567");
 
         collection.displayCollection();
     }

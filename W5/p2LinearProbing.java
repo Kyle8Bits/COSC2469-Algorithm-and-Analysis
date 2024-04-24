@@ -29,6 +29,8 @@ public class p2LinearProbing{
 
         collection.displayCollection();
         System.out.println(collection.hashTable[1].fullName);
+
+        System.out.println(collection.get("s3974876").fullName);
     }
 }
 
@@ -53,13 +55,13 @@ class HashtableLinearProbing{
       }
     
     
-      int hashString(String s) {
+    int hashString(String s) {
         int res = 0;
         for (int i = 0; i < s.length(); i++) {
           res += hashCharacter(s.charAt(i));
         }
         return res % N;
-      }
+    }
     
 
     boolean put(RMITStudent student){
@@ -73,6 +75,25 @@ class HashtableLinearProbing{
         hashTable[hash] = student;
         size++; 
         return true;
+    }
+
+    RMITStudent get(String sid){
+        int hash = hashString(sid);
+        int temp = hash;
+
+        if(hashTable[hash].studentId.equals(sid)){
+            return hashTable[hash];
+        }
+        else{
+            hash = (hash+1) % N;
+            while(hash != temp){
+                if(hashTable[hash].studentId.equals(sid)){
+                    return hashTable[hash];
+                }
+                hash = (hash+1)%N;
+            }
+            return null;
+        }
     }
 
     public void displayCollection(){
